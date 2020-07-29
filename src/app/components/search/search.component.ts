@@ -11,15 +11,17 @@ import { mapToMapExpression } from '@angular/compiler/src/render3/util';
 export class SearchComponent {
 
   resultado: any[] = []
+  cargando: boolean
 
-  constructor(private servicioSpotify: SpotifyService) { }
+  constructor(private servicioSpotify: SpotifyService) {}
 
   buscar(cadenaBusqueda: string){
-    
-    this.servicioSpotify.buscarArtista(cadenaBusqueda)
-      .subscribe( (respuesta: any) => {
-        this.resultado = respuesta
-      })
+    this.cargando = true
+    this.servicioSpotify.buscarArtistas(cadenaBusqueda)
+    .subscribe( (respuesta: any) => {
+      this.resultado = respuesta
+      this.cargando = false
+    })
   }
 
 }

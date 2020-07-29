@@ -4,4 +4,6 @@
     </div>
 </div>
 
-<app-tarjetas [items]="this.resultado"></app-tarjetas>
+<app-loading *ngIf="cargando && termino.value.trim().length !== 0"></app-loading>
+
+<app-tarjetas *ngIf="!cargando" [items]="this.resultado"></app-tarjetas>

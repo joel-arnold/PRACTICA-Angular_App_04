@@ -8,10 +8,27 @@ import { SpotifyService } from '../../services/spotify.service';
 })
 export class HomeComponent {
   ultimosLanzamientos: any[] = [];
+  cargando: boolean
+  
+  error: boolean;
+  mensajeError: string;
 
   constructor(private servicioSpotify: SpotifyService) {
+    this.error = false;
+    this.cargando = true
+
     this.servicioSpotify.traerLanzamientos().subscribe((data: any) => {
       this.ultimosLanzamientos = data
-    });
+      this.cargando = false
+    },
+    ( errorServicio ) => {
+
+      this.cargando = false;
+      this.error = true;
+      console.log(errorServicio.error.error.message);
+      this.mensajeError = errorServicio.error.error.message;
+
+    }
+    );
   }
 }
